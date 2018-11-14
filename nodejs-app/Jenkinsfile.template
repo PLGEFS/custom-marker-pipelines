@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'nodejs-app' }
+  agent any
     options { 
     buildDiscarder(logRotator(numToKeepStr: '2'))
   }
@@ -15,6 +15,17 @@ pipeline {
         success {
           slackSend "${JOB_NAME} pipeline job is awaiting approval at: ${RUN_DISPLAY_URL}"
         }
+      }
+    }
+    stage('Build and Push Image') {
+      agent any
+      when {
+        beforeAgent true
+        branch 'master'
+      }
+      steps {
+        echo "TODO - build and push image"
+        unstash 'app'
       }
     }
 }
