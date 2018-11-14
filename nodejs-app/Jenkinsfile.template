@@ -1,6 +1,10 @@
 pipeline {
   agent any
-  stages {
+  agent { label 'nodejs-app' }
+    options { 
+    buildDiscarder(logRotator(numToKeepStr: '2'))
+  }
+    stages {
     stage('Say Hello') {
       steps {
         echo 'Hello World!'   
