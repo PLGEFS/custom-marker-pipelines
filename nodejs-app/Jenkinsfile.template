@@ -1,31 +1,11 @@
 pipeline {
   agent any
-    options { 
-    buildDiscarder(logRotator(numToKeepStr: '2'))
+  stages {
+    stage('Say Hello') {
+      steps {
+        echo 'Hello World!'   
+        sh 'java -version'
+      }
+    }
   }
-        stage('Build and Push Image') {
-      when {
-         beforeAgent true
-         branch 'master'
-      }
-      steps {
-         echo "TODO - build and push image"
-      }
-      post {
-        success {
-          slackSend "${JOB_NAME} pipeline job is awaiting approval at: ${RUN_DISPLAY_URL}"
-        }
-      }
-    }
-    stage('Build and Push Image') {
-      agent any
-      when {
-        beforeAgent true
-        branch 'master'
-      }
-      steps {
-        echo "TODO - build and push image"
-        unstash 'app'
-      }
-    }
 }
